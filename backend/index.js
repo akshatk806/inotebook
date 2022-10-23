@@ -2,6 +2,10 @@ const express=require('express')
 const db=require('./db')
 
 const app=express();
+
+// Middleware for sending something in request body(header)
+app.use(express.json());
+
 const port=3000;
 
 // Available routes
