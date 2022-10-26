@@ -1,12 +1,11 @@
 const express=require('express')
 const db=require('./db')
+const port=8000;
 
 const app=express();
 
 // Middleware for sending something in request body(header)
 app.use(express.json());
-
-const port=3000;
 
 // Available routes
 app.use('/api/auth',require('./routes/auth'))
