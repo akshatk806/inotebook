@@ -2,6 +2,7 @@ const express=require('express')
 const router=express.Router();
 const User=require('../models/User');
 const { body, validationResult } = require('express-validator');
+const bcrypt=require('bcryptjs');
 
 // Create a user using: POST - "/api/auth/createuser" (this is the end point). No login required
 router.post('/createuser',[
@@ -31,11 +32,14 @@ router.post('/createuser',[
                 error:"Sorry! A user with this email already exists"
             })
         }
+        const salt=await bcrypt.genSalt(10);
+        securedPassword=await bcrypt.hash(request.body.password,salt);
+
         // Creating an user 
         user=await User.create({
             email:request.body.email,
             name:request.body.name,
-            password:request.body.password
+            password:securedPassword
         })
         response.json({user})
         
